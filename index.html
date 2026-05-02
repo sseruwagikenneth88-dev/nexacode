@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NexaCode | Software Development & AI Automation</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --dark: #020814;
+      --blue: #0d8cff;
+      --cyan: #00d4ff;
+      --muted: #aebbd3;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--dark);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .navbar {
+      background: rgba(2, 8, 20, 0.75);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(0, 212, 255, 0.14);
+    }
+
+    .navbar-brand {
+      font-weight: 900;
+      letter-spacing: 3px;
+      color: white !important;
+    }
+
+    .navbar-brand span { color: var(--blue); }
+
+    .nav-link {
+      color: #dce8ff !important;
+      font-weight: 600;
+      margin-left: 14px;
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: "";
+      width: 0;
+      height: 2px;
+      background: var(--cyan);
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      transition: 0.3s;
+    }
+
+    .nav-link:hover::after { width: 100%; }
+
+    section {
+      padding: 95px 0;
+      position: relative;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 90px;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(2,8,20,0.92), rgba(2,8,20,0.96)),
+        linear-gradient(90deg, rgba(13,140,255,0.08) 1px, transparent 1px),
+        linear-gradient(rgba(13,140,255,0.08) 1px, transparent 1px);
+      background-size: auto, 45px 45px, 45px 45px;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: 950;
+      line-height: 1.05;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p,
+    .section-subtitle,
+    .service-card p,
+    .portfolio-card p,
+    .process-step p,
+    .glass-card p {
+      color: #c9d6ea;
+    }
+
+    .badge-custom {
+      display: inline-block;
+      color: var(--cyan);
+      border: 1px solid rgba(0,212,255,0.35);
+      background: rgba(0,212,255,0.06);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    .btn-main {
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 40px;
+      font-weight: 800;
+      box-shadow: 0 10px 28px rgba(13,140,255,0.35);
+      transition: 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-main:hover {
+      transform: translateY(-4px);
+      color: white;
+      box-shadow: 0 18px 45px rgba(0,212,255,0.42);
+    }
+
+    .btn-outline-custom {
+      border: 1px solid rgba(0,212,255,0.6);
+      color: white;
+      padding: 14px 32px;
+      border-radius: 40px;
+      font-weight: 800;
+      text-decoration: none;
+      margin-left: 10px;
+      transition: 0.3s;
+      display: inline-block;
+    }
+
+    .btn-outline-custom:hover {
+      background: var(--cyan);
+      color: var(--dark);
+    }
+
+    .hero-terminal,
+    .code-window,
+    .glass-card,
+    .service-card,
+    .portfolio-card,
+    .process-step,
+    .stats-box,
+    .contact-card {
+      background: rgba(255,255,255,0.075);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(0,212,255,0.18);
+      color: white;
+      box-shadow: 0 20px 55px rgba(0,0,0,0.22);
+      border-radius: 28px;
+    }
+
+    .terminal-top {
+      background: rgba(255,255,255,0.08);
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(0,212,255,0.14);
+    }
+
+    .dot {
+      height: 11px;
+      width: 11px;
+      display: inline-block;
+      border-radius: 50%;
+      margin-right: 7px;
+    }
+
+    .dot.red { background: #ff5f56; }
+    .dot.yellow { background: #ffbd2e; }
+    .dot.green { background: #27c93f; }
+
+    .terminal-body {
+      padding: 30px;
+      color: #dce8ff;
+    }
+
+    .terminal-body code {
+      color: var(--cyan);
+    }
+
+    .terminal-line {
+      margin-bottom: 15px;
+    }
+
+    .floating-code {
+      position: absolute;
+      color: rgba(0,212,255,0.16);
+      font-size: 58px;
+      font-weight: 950;
+      animation: float 5s ease-in-out infinite;
+    }
+
+    .code-one { top: 17%; right: 9%; }
+    .code-two { bottom: 19%; left: 8%; animation-delay: 1s; }
+    .code-three { bottom: 14%; right: 22%; animation-delay: 2s; }
+
+    .tech-strip {
+      padding: 26px 0;
+      background: #031025;
+      border-top: 1px solid rgba(0,212,255,0.15);
+      border-bottom: 1px solid rgba(0,212,255,0.15);
+    }
+
+    .tech-scroll {
+      display: flex;
+      gap: 35px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .tech-scroll span {
+      color: var(--cyan);
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .dark-section,
+    .code-typing-section {
+      background:
+        radial-gradient(circle at top right, rgba(13,140,255,0.18), transparent 35%),
+        radial-gradient(circle at bottom left, rgba(0,212,255,0.09), transparent 35%),
+        #020814;
+    }
+
+    .section-title {
+      color: white;
+      font-weight: 950;
+      margin-bottom: 15px;
+    }
+
+    .section-subtitle {
+      max-width: 650px;
+      margin: auto;
+    }
+
+    .glass-card {
+      padding: 40px;
+    }
+
+    .code-window {
+      overflow: hidden;
+    }
+
+    .code-window pre {
+      min-height: 350px;
+      margin: 0;
+      padding: 30px;
+      color: #dce8ff;
+      font-size: 15px;
+      line-height: 1.8;
+      white-space: pre-wrap;
+    }
+
+    .code-window code {
+      color: var(--cyan);
+    }
+
+    .cursor {
+      color: white;
+      animation: blink 0.7s infinite;
+    }
+
+    .stats-box {
+      padding: 32px;
+      text-align: center;
+      height: 100%;
+      transition: 0.35s;
+    }
+
+    .stats-box:hover,
+    .service-card:hover,
+    .portfolio-card:hover,
+    .process-step:hover {
+      transform: translateY(-10px);
+      border-color: rgba(0,212,255,0.42);
+    }
+
+    .stats-box h3 {
+      color: var(--cyan);
+      font-weight: 950;
+      font-size: 2.5rem;
+    }
+
+    .service-card {
+      padding: 35px;
+      height: 100%;
+      transition: 0.35s;
+    }
+
+    .service-card small {
+      color: var(--cyan);
+      letter-spacing: 2px;
+      font-weight: 900;
+    }
+
+    .service-card i {
+      font-size: 46px;
+      color: var(--blue);
+      margin: 22px 0;
+      display: block;
+    }
+
+    .portfolio-card {
+      overflow: hidden;
+      height: 100%;
+      transition: 0.35s;
+    }
+
+    .portfolio-top {
+      background: linear-gradient(135deg, rgba(6,22,47,0.95), rgba(13,140,255,0.65));
+      color: white;
+      padding: 45px 25px;
+      text-align: center;
+    }
+
+    .process-step {
+      padding: 32px;
+      height: 100%;
+      transition: 0.35s;
+    }
+
+    .process-number {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 950;
+      margin-bottom: 20px;
+    }
+
+    .contact {
+      background:
+        linear-gradient(rgba(2,8,20,0.95), rgba(2,8,20,0.97)),
+        radial-gradient(circle at top left, #0d8cff55, transparent 35%);
+    }
+
+    .contact-card {
+      padding: 35px;
+    }
+
+    .form-control {
+      border-radius: 15px;
+      padding: 15px;
+      border: 1px solid rgba(0,212,255,0.13);
+      background: rgba(255,255,255,0.09);
+      color: white;
+    }
+
+    .form-control::placeholder { color: #b7c3d8; }
+
+    .form-control:focus {
+      background: rgba(255,255,255,0.12);
+      color: white;
+      box-shadow: 0 0 0 0.25rem rgba(0,212,255,0.12);
+      border-color: var(--cyan);
+    }
+
+    footer {
+      background: #01050d;
+      color: #9da9be;
+      padding: 22px;
+      text-align: center;
+      border-top: 1px solid rgba(0,212,255,0.12);
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      background: #25D366;
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      z-index: 999;
+      text-decoration: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-18px); }
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.6); }
+      70% { box-shadow: 0 0 0 15px rgba(37,211,102,0); }
+      100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    @media(max-width: 768px) {
+      .hero h1 { font-size: 2.55rem; }
+
+      .nav-link {
+        margin-left: 0;
+        padding: 12px 0;
+      }
+
+      .btn-outline-custom {
+        margin-left: 0;
+        margin-top: 12px;
+      }
+
+      .floating-code { display: none; }
+
+      .code-window pre {
+        font-size: 13px;
+        min-height: 300px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#home">NEXA<span>CODE</span></a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#code">JavaScript</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">Lab</a></li>
+        <li class="nav-item"><a class="nav-link" href="#services">Systems</a></li>
+        <li class="nav-item"><a class="nav-link" href="#projects">Builds</a></li>
+        <li class="nav-item"><a class="nav-link" href="#process">Process</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Launch</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section id="home" class="hero">
+  <div class="floating-code code-one">&lt;/&gt;</div>
+  <div class="floating-code code-two">{ JS }</div>
+  <div class="floating-code code-three">0101</div>
+
+  <div class="container hero-content">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-7">
+        <span class="badge-custom" data-aos="fade-up">SOFTWARE • WEB • AI • MARKETING</span>
+
+        <h1 data-aos="fade-up" data-aos-delay="100">
+          We Build Digital Systems That <span>Think, Sell & Scale</span>
+        </h1>
+
+        <p class="lead mt-4" data-aos="fade-up" data-aos-delay="200">
+          NexaCode creates websites, custom software, digital marketing systems,
+          and AI automations for businesses that want to grow faster and operate smarter.
+        </p>
+
+        <div class="mt-4" data-aos="fade-up" data-aos-delay="300">
+          <a href="#contact" class="btn-main">Start Your Project</a>
+          <a href="#code" class="btn-outline-custom">View JavaScript</a>
+        </div>
+      </div>
+
+      <div class="col-lg-5" data-aos="zoom-in" data-aos-delay="350">
+        <div class="hero-terminal">
+          <div class="terminal-top">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+
+          <div class="terminal-body">
+            <div class="terminal-line"><code>$ npm create nexacode-app</code></div>
+            <div class="terminal-line">Website Design: <code>active</code></div>
+            <div class="terminal-line">Software System: <code>building</code></div>
+            <div class="terminal-line">AI Automation: <code>connected</code></div>
+            <div class="terminal-line">Digital Marketing: <code>scaling</code></div>
+            <hr>
+            <div><code>Output:</code> smarter business operations.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tech-strip">
+  <div class="container">
+    <div class="tech-scroll">
+      <span>JavaScript</span>
+      <span>PHP</span>
+      <span>Laravel</span>
+      <span>Bootstrap</span>
+      <span>Web Apps</span>
+      <span>AI Chatbots</span>
+      <span>Automation</span>
+      <span>SEO</span>
+    </div>
+  </div>
+</section>
+
+<section id="code" class="code-typing-section">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6" data-aos="fade-right">
+        <span class="badge-custom">JAVASCRIPT CODE TYPING</span>
+        <h2 class="section-title">We Turn Ideas Into Working Systems</h2>
+        <p>
+          This section automatically types JavaScript code to give the website
+          a modern software-company feeling.
+        </p>
+        <a href="https://wa.me/256700951879" class="btn-main" target="_blank">
+          Chat on WhatsApp
+        </a>
+      </div>
+
+      <div class="col-lg-6" data-aos="fade-left">
+        <div class="code-window">
+          <div class="terminal-top">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+
+          <pre><code id="typingCode"></code><span class="cursor">|</span></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="dark-section">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6" data-aos="fade-right">
+        <div class="glass-card">
+          <span class="badge-custom">NEXACODE LAB</span>
+          <h2 class="section-title">Not Just Websites. We Build Business Engines.</h2>
+          <p>
+            NexaCode helps companies move from manual work to smart digital systems.
+            We design, build, automate, and improve the way your business gets customers
+            and manages operations.
+          </p>
+          <a href="#contact" class="btn-main mt-3">Build With Us</a>
+        </div>
+      </div>
+
+      <div class="col-lg-6" data-aos="fade-left">
+        <div class="glass-card">
+          <h4 class="mb-4">Why Businesses Choose NexaCode</h4>
+          <p><i class="bi bi-check-circle-fill text-info"></i> Premium modern design style</p>
+          <p><i class="bi bi-check-circle-fill text-info"></i> Mobile-first websites and systems</p>
+          <p><i class="bi bi-check-circle-fill text-info"></i> AI automation for support and sales</p>
+          <p><i class="bi bi-check-circle-fill text-info"></i> Custom dashboards and admin panels</p>
+          <p><i class="bi bi-check-circle-fill text-info"></i> Digital marketing that attracts leads</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stats" class="dark-section">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-3">
+        <div class="stats-box" data-aos="zoom-in">
+          <h3>5+</h3>
+          <p>Years Experience</p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="stats-box" data-aos="zoom-in" data-aos-delay="100">
+          <h3>50+</h3>
+          <p>Projects Built</p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="stats-box" data-aos="zoom-in" data-aos-delay="200">
+          <h3>24/7</h3>
+          <p>Digital Support</p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="stats-box" data-aos="zoom-in" data-aos-delay="300">
+          <h3>AI</h3>
+          <p>Powered Solutions</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="dark-section">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="badge-custom">OUR SYSTEMS</span>
+      <h2 class="section-title">Digital Solutions We Build</h2>
+      <p class="section-subtitle">
+        Each service is designed like a business module that helps your company work better.
+      </p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3">
+        <div class="service-card" data-aos="fade-up">
+          <small>MODULE 01</small>
+          <i class="bi bi-code-slash"></i>
+          <h5>Software Development</h5>
+          <p>Custom systems, dashboards, CRMs, portals, and business management platforms.</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+          <small>MODULE 02</small>
+          <i class="bi bi-laptop"></i>
+          <h5>Website Design</h5>
+          <p>Modern websites, landing pages, portfolios, company profiles, and ecommerce sites.</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+          <small>MODULE 03</small>
+          <i class="bi bi-megaphone"></i>
+          <h5>Digital Marketing</h5>
+          <p>Brand visibility, social media content, campaigns, lead generation, and SEO support.</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+          <small>MODULE 04</small>
+          <i class="bi bi-robot"></i>
+          <h5>AI Automations</h5>
+          <p>AI chatbots, smart workflows, automated replies, customer support, and business tools.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="dark-section">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="badge-custom">BUILDS</span>
+      <h2 class="section-title">What NexaCode Can Create</h2>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="portfolio-card" data-aos="fade-up">
+          <div class="portfolio-top">
+            <i class="bi bi-building fs-1"></i>
+            <h5 class="mt-3">Business Websites</h5>
+          </div>
+          <div class="p-4">
+            <p>Professional websites for companies, clinics, agencies, schools, NGOs, and organizations.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="portfolio-card" data-aos="fade-up" data-aos-delay="150">
+          <div class="portfolio-top">
+            <i class="bi bi-speedometer2 fs-1"></i>
+            <h5 class="mt-3">Management Systems</h5>
+          </div>
+          <div class="p-4">
+            <p>Tenant systems, booking systems, CRMs, admin dashboards, and client portals.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="portfolio-card" data-aos="fade-up" data-aos-delay="300">
+          <div class="portfolio-top">
+            <i class="bi bi-chat-dots fs-1"></i>
+            <h5 class="mt-3">AI Chatbots</h5>
+          </div>
+          <div class="p-4">
+            <p>Smart chatbots for sales, support, FAQs, appointment booking, and lead capture.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process" class="dark-section">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="badge-custom">HOW WE LAUNCH</span>
+      <h2 class="section-title">Our Build Process</h2>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-3">
+        <div class="process-step" data-aos="fade-up">
+          <div class="process-number">1</div>
+          <h4>Discover</h4>
+          <p>We understand your business, customers, goals, and the system you need.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="process-step" data-aos="fade-up" data-aos-delay="100">
+          <div class="process-number">2</div>
+          <h4>Design</h4>
+          <p>We create the structure, user flow, pages, features, and visual direction.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="process-step" data-aos="fade-up" data-aos-delay="200">
+          <div class="process-number">3</div>
+          <h4>Build</h4>
+          <p>We develop, test, connect tools, and prepare your product for launch.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="process-step" data-aos="fade-up" data-aos-delay="300">
+          <div class="process-number">4</div>
+          <h4>Scale</h4>
+          <p>We support, improve, automate, and help your digital system grow.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="container">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-5" data-aos="fade-right">
+        <span class="badge-custom">PROJECT LAUNCH</span>
+        <h2 class="section-title">Ready To Build Something Different?</h2>
+        <p>
+          Contact NexaCode for websites, software development, digital marketing,
+          and AI automation systems.
+        </p>
+
+        <p><i class="bi bi-telephone text-info"></i> +256 700 951 879</p>
+        <p><i class="bi bi-envelope text-info"></i> nexacodesoftware@gmail.com</p>
+        <p><i class="bi bi-geo-alt text-info"></i> Kampala, Uganda</p>
+      </div>
+
+      <div class="col-lg-7" data-aos="fade-left">
+        <div class="contact-card">
+          <form>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="Your Name">
+              </div>
+              <div class="col-md-6">
+                <input type="email" class="form-control" placeholder="Your Email">
+              </div>
+              <div class="col-12">
+                <input type="text" class="form-control" placeholder="Service Needed">
+              </div>
+              <div class="col-12">
+                <textarea class="form-control" rows="5" placeholder="Your Message"></textarea>
+              </div>
+              <div class="col-12">
+                <button class="btn-main" type="submit">Send Message</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="mb-0">© 2026 NexaCode. Driven by Innovation.</p>
+</footer>
+
+<a href="https://wa.me/256700951879" class="whatsapp-float" target="_blank">
+  <i class="bi bi-whatsapp"></i>
+</a>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+  AOS.init({
+    duration: 900,
+    once: true,
+    offset: 100
+  });
+
+  const codeText = `// NexaCode JavaScript Automation
+
+class NexaCode {
+  constructor() {
+    this.company = "NexaCode";
+    this.email = "nexacodesoftware@gmail.com";
+    this.whatsapp = "+256700951879";
+    this.location = "Kampala, Uganda";
+  }
+
+  services() {
+    return [
+      "Website Design",
+      "Software Development",
+      "Digital Marketing",
+      "AI Automation"
+    ];
+  }
+
+  buildWebsite(clientName) {
+    return \`\${clientName}, your website is now live.\`;
+  }
+
+  automateBusiness(task) {
+    return \`AI automation started for: \${task}\`;
+  }
+
+  launchProject(projectName) {
+    console.log("Launching " + projectName + "...");
+    return "Project launched successfully.";
+  }
+}
+
+const project = new NexaCode();
+
+console.log(project.services());
+console.log(project.buildWebsite("Your Business"));
+console.log(project.automateBusiness("Customer Support"));
+console.log(project.launchProject("NexaCode Website"));`;
+
+  let typingIndex = 0;
+  const typingElement = document.getElementById("typingCode");
+
+  function typeCode() {
+    if (!typingElement) return;
+
+    if (typingIndex < codeText.length) {
+      typingElement.textContent += codeText.charAt(typingIndex);
+      typingIndex++;
+      setTimeout(typeCode, 35);
+    } else {
+      setTimeout(() => {
+        typingElement.textContent = "";
+        typingIndex = 0;
+        typeCode();
+      }, 2500);
+    }
+  }
+
+  typeCode();
+</script>
+
+</body>
+</html>
