@@ -10,6 +10,11 @@
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
   <style>
+    html,
+body {
+  overflow-x: hidden;
+}
+    
     :root {
       --dark: #020814;
       --blue: #0d8cff;
@@ -434,6 +439,25 @@
         min-height: 300px;
       }
     }
+
+    @media (max-width: 768px) {
+  [data-aos="fade-left"],
+  [data-aos="fade-right"] {
+    transform: none !important;
+  }
+
+  .hero-terminal,
+  .code-window {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .code-window pre {
+    overflow-x: hidden;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+}
   </style>
 </head>
 
@@ -817,48 +841,16 @@
   AOS.init({
     duration: 900,
     once: true,
-    offset: 100
+    offset: 100,
+    disable: window.innerWidth < 768
   });
 
-  const codeText = `// NexaCode JavaScript Automation
+  const codeText = `# NexaCode AI Automation Engine
 
-class NexaCode {
-  constructor() {
-    this.company = "NexaCode";
-    this.email = "nexacodesoftware@gmail.com";
-    this.whatsapp = "+256700951879";
-    this.location = "Kampala, Uganda";
-  }
-
-  services() {
-    return [
-      "Website Design",
-      "Software Development",
-      "Digital Marketing",
-      "AI Automation"
-    ];
-  }
-
-  buildWebsite(clientName) {
-    return \`\${clientName}, your website is now live.\`;
-  }
-
-  automateBusiness(task) {
-    return \`AI automation started for: \${task}\`;
-  }
-
-  launchProject(projectName) {
-    console.log("Launching " + projectName + "...");
-    return "Project launched successfully.";
-  }
-}
-
-const project = new NexaCode();
-
-console.log(project.services());
-console.log(project.buildWebsite("Your Business"));
-console.log(project.automateBusiness("Customer Support"));
-console.log(project.launchProject("NexaCode Website"));`;
+from sklearn.neural_network import MLPClassifier
+model = MLPClassifier(hidden_layer_sizes=(128,64))
+prediction = model.predict(client_business_data)
+launch_ai_workflow(prediction, crm_sync=True)`;
 
   let typingIndex = 0;
   const typingElement = document.getElementById("typingCode");
@@ -869,18 +861,17 @@ console.log(project.launchProject("NexaCode Website"));`;
     if (typingIndex < codeText.length) {
       typingElement.textContent += codeText.charAt(typingIndex);
       typingIndex++;
-      setTimeout(typeCode, 35);
+      setTimeout(typeCode, 30);
     } else {
       setTimeout(() => {
         typingElement.textContent = "";
         typingIndex = 0;
         typeCode();
-      }, 2500);
+      }, 1800);
     }
   }
 
   typeCode();
 </script>
-
 </body>
 </html>
