@@ -99,7 +99,8 @@
     .service-card p,
     .portfolio-card p,
     .process-step p,
-    .glass-card p {
+    .glass-card p,
+    #founder p {
       color: #c9d6ea;
     }
 
@@ -161,7 +162,8 @@
     .portfolio-card,
     .process-step,
     .stats-box,
-    .contact-card {
+    .contact-card,
+    .founder-image-card {
       background: rgba(255,255,255,0.075);
       backdrop-filter: blur(18px);
       border: 1px solid rgba(0,212,255,0.18);
@@ -200,13 +202,9 @@
       color: #dce8ff;
     }
 
-    .terminal-body code {
-      color: var(--cyan);
-    }
+    .terminal-body code { color: var(--cyan); }
 
-    .terminal-line {
-      margin-bottom: 15px;
-    }
+    .terminal-line { margin-bottom: 15px; }
 
     .floating-code {
       position: absolute;
@@ -281,9 +279,7 @@
       word-break: break-word;
     }
 
-    .code-window code {
-      color: var(--cyan);
-    }
+    .code-window code { color: var(--cyan); }
 
     .cursor {
       color: white;
@@ -359,6 +355,40 @@
       font-weight: 950;
       margin-bottom: 20px;
       animation: numberPulse 3s infinite;
+    }
+
+    .founder-image-card {
+      padding: 20px;
+      overflow: hidden;
+      animation: terminalGlow 4s ease-in-out infinite;
+    }
+
+    .founder-img {
+      width: 100%;
+      border-radius: 25px;
+      object-fit: cover;
+    }
+
+    .founder-role {
+      color: var(--cyan);
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .founder-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .founder-tags span {
+      border: 1px solid rgba(0,212,255,0.25);
+      padding: 8px 16px;
+      border-radius: 30px;
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 700;
+      background: rgba(0,212,255,0.05);
     }
 
     .contact {
@@ -460,7 +490,8 @@
     .service-card:hover,
     .portfolio-card:hover,
     .process-step:hover,
-    .glass-card:hover {
+    .glass-card:hover,
+    .founder-image-card:hover {
       transform: translateY(-12px) rotateX(5deg) rotateY(-5deg);
       border-color: rgba(0,212,255,0.42);
     }
@@ -471,67 +502,35 @@
     }
 
     @keyframes glitchPop {
-      0% {
-        transform: translateY(35px) skewX(-8deg);
-        opacity: 0;
-      }
-      35% {
-        transform: translateY(0) skewX(5deg);
-        opacity: 1;
-      }
-      60% {
-        transform: skewX(-2deg);
-      }
-      100% {
-        transform: skewX(0);
-      }
+      0% { transform: translateY(35px) skewX(-8deg); opacity: 0; }
+      35% { transform: translateY(0) skewX(5deg); opacity: 1; }
+      60% { transform: skewX(-2deg); }
+      100% { transform: skewX(0); }
     }
 
     @keyframes floatTilt {
-      0%, 100% {
-        transform: translateY(0) rotate(0deg);
-      }
-      50% {
-        transform: translateY(-16px) rotate(1.5deg);
-      }
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-16px) rotate(1.5deg); }
     }
 
     @keyframes neonPulse {
-      0%, 100% {
-        box-shadow: 0 0 0 rgba(0,212,255,0);
-      }
-      50% {
-        box-shadow: 0 0 25px rgba(0,212,255,0.35);
-      }
+      0%, 100% { box-shadow: 0 0 0 rgba(0,212,255,0); }
+      50% { box-shadow: 0 0 25px rgba(0,212,255,0.35); }
     }
 
     @keyframes terminalGlow {
-      0%, 100% {
-        box-shadow: 0 20px 55px rgba(0,0,0,0.22);
-      }
-      50% {
-        box-shadow: 0 20px 70px rgba(0,212,255,0.18);
-      }
+      0%, 100% { box-shadow: 0 20px 55px rgba(0,0,0,0.22); }
+      50% { box-shadow: 0 20px 70px rgba(0,212,255,0.18); }
     }
 
     @keyframes techGlow {
-      0%, 100% {
-        opacity: 0.65;
-        transform: translateY(0);
-      }
-      50% {
-        opacity: 1;
-        transform: translateY(-3px);
-      }
+      0%, 100% { opacity: 0.65; transform: translateY(0); }
+      50% { opacity: 1; transform: translateY(-3px); }
     }
 
     @keyframes numberPulse {
-      0%, 100% {
-        box-shadow: 0 0 0 rgba(0,212,255,0);
-      }
-      50% {
-        box-shadow: 0 0 25px rgba(0,212,255,0.35);
-      }
+      0%, 100% { box-shadow: 0 0 0 rgba(0,212,255,0); }
+      50% { box-shadow: 0 0 25px rgba(0,212,255,0.35); }
     }
 
     @keyframes pulse {
@@ -545,13 +544,9 @@
     }
 
     @media(max-width: 768px) {
-      section {
-        padding: 75px 0;
-      }
+      section { padding: 75px 0; }
 
-      .hero h1 {
-        font-size: 2.55rem;
-      }
+      .hero h1 { font-size: 2.55rem; }
 
       .nav-link {
         margin-left: 0;
@@ -563,9 +558,7 @@
         margin-top: 12px;
       }
 
-      .floating-code {
-        display: none;
-      }
+      .floating-code { display: none; }
 
       .code-window pre {
         font-size: 13px;
@@ -581,7 +574,8 @@
       .service-card:hover,
       .portfolio-card:hover,
       .process-step:hover,
-      .glass-card:hover {
+      .glass-card:hover,
+      .founder-image-card:hover {
         transform: translateY(-6px);
       }
     }
@@ -603,6 +597,7 @@
         <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="#code">AI Code</a></li>
         <li class="nav-item"><a class="nav-link" href="#about">Lab</a></li>
+        <li class="nav-item"><a class="nav-link" href="#founder">Founder</a></li>
         <li class="nav-item"><a class="nav-link" href="#services">Systems</a></li>
         <li class="nav-item"><a class="nav-link" href="#projects">Builds</a></li>
         <li class="nav-item"><a class="nav-link" href="#process">Process</a></li>
@@ -736,7 +731,45 @@
   </div>
 </section>
 
-<section id="stats" class="dark-section">
+<section id="founder" class="dark-section">
+  <div class="container">
+    <div class="row align-items-center g-5">
+
+      <div class="col-lg-5">
+        <div class="founder-image-card card-scan">
+          <img src="https://www.nexacodesafaris.com/images/ken.jpg" alt="Sseruwagi Kenneth" class="img-fluid founder-img">
+        </div>
+      </div>
+
+      <div class="col-lg-7">
+        <span class="badge-custom">MEET THE FOUNDER</span>
+        <h2 class="section-title">Sseruwagi Kenneth</h2>
+        <h5 class="founder-role">Founder & Lead Software Architect</h5>
+
+        <p class="mt-4">
+          Sseruwagi Kenneth is the founder of NexaCode, leading the creation of modern websites,
+          custom software, AI automation systems, and digital business tools.
+        </p>
+
+        <p>
+          His focus is helping businesses move from ordinary online presence to smarter systems
+          that support growth, automation, customer communication, and digital operations.
+        </p>
+
+        <div class="founder-tags mt-4">
+          <span>Software Developer</span>
+          <span>AI Automation Builder</span>
+          <span>Web Architect</span>
+          <span>Digital Strategist</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Keep the rest of your Services, Projects, Process, Contact, Footer exactly as they were -->
+ <section id="stats" class="dark-section">
   <div class="container">
     <div class="row g-4">
       <div class="col-md-3">
@@ -994,13 +1027,13 @@ launch_ai_workflow(prediction, crm_sync=True)`;
   typeCode();
 
   const revealItems = document.querySelectorAll(
-    ".badge-custom, .hero h1, .hero p, .btn-main, .btn-outline-custom, .hero-terminal, .code-window, .glass-card, .stats-box, .service-card, .portfolio-card, .process-step, .contact-card, .section-title, .section-subtitle"
+    ".badge-custom, .hero h1, .hero p, .btn-main, .btn-outline-custom, .hero-terminal, .code-window, .glass-card, .stats-box, .service-card, .portfolio-card, .process-step, .contact-card, .section-title, .section-subtitle, .founder-image-card, .founder-tags span"
   );
 
   revealItems.forEach((item, index) => {
     item.classList.add("reveal");
 
-    if (item.classList.contains("hero") || item.classList.contains("section-title")) {
+    if (item.classList.contains("section-title")) {
       item.classList.add("glitch-in");
     }
 
